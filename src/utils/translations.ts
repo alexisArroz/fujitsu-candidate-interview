@@ -11,8 +11,16 @@ export default {
         placeholder: 'Password',
         error: 'Password is required'
       },
-      forgotPassword: 'FORGOT PASSWORD',
+      forgotPassword: {
+        formLink: 'FORGOT PASSWORD',
+        title: 'Forgot Your Password?',
+        description: 'Enter your email to receive your password reset instructions.'
+      },
       submitButton: 'LOGIN'
+    },
+    footer: {
+      terms: 'Terms of Service',
+      privacy: 'Privacy Policy'
     }
   },
   es: {
@@ -27,8 +35,17 @@ export default {
         placeholder: 'Contraseña',
         error: 'Se requiere una contraseña'
       },
-      forgotPassword: 'OLVIDÓ LA CONTRASEÑA',
+      forgotPassword: {
+        formLink: 'OLVIDÓ LA CONTRASEÑA',
+        title: '¿Ha Olvidado Su Contraseña?',
+        description:
+          'Ingrese su correo electrónico para recibir sus instrucciones de restablecimiento de contraseña.'
+      },
       submitButton: 'INICIO DE SESIÓN'
+    },
+    footer: {
+      terms: 'Condiciones de Servicio',
+      privacy: 'Política de Privacidad'
     }
   }
 }

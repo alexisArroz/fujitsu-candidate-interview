@@ -9,7 +9,6 @@ const props = defineProps<{
   placeholder?: string
   modelValue?: any
 }>()
-const hasIcon = props.icon ? true : false
 const emit = defineEmits(['update:modelValue', 'buttonClick'])
 const updateValue = (value: string) => {
   emit('update:modelValue', value)
@@ -54,11 +53,15 @@ const updateValue = (value: string) => {
 .base-input--input {
   border: none;
   background-color: transparent;
-  font-size: 1rem;
+  font-size: 0.9rem;
   flex: auto;
   padding: 6px;
   line-height: 1.5rem;
   min-width: 0;
+  font-weight: 200;
+}
+.base-input--input.input::placeholder {
+  color: #000000;
 }
 .base-input--has-icon {
   display: flex;
@@ -70,8 +73,13 @@ const updateValue = (value: string) => {
   padding: 0 10px;
   border-left: 1px solid #a0a0a0;
 }
+.base-input.has-error .base-input--button {
+  color: #a94442;
+  background-color: #f2dede;
+}
 .base-input--error-text {
   color: #a94442;
   min-height: 22px;
+  font-size: 0.85rem;
 }
 </style>

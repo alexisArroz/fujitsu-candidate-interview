@@ -15,13 +15,15 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <div v-if="showLoading" class="loading">
-    <FaIcon
-      class="loading--spinner"
-      :class="{ 'loading--spinner--rotating': showLoading }"
-      icon="spinner"
-    />
-  </div>
+  <Teleport to="body">
+    <div v-if="showLoading" class="loading">
+      <FaIcon
+        class="loading--spinner"
+        :class="{ 'loading--spinner--rotating': showLoading }"
+        icon="spinner"
+      />
+    </div>
+  </Teleport>
   <div>
     <Header />
     <div class="login-view--form">
@@ -37,7 +39,7 @@ const onSubmit = () => {
   justify-content: center;
   align-items: center;
   height: calc(100vh - 225px);
-  min-height: 380px;
+  min-height: 365px;
 }
 .loading {
   width: 100%;
