@@ -9,7 +9,6 @@ const props = defineProps<{
   placeholder?: string
   modelValue?: any
 }>()
-const hasIcon = props.icon ? true : false
 const emit = defineEmits(['update:modelValue', 'buttonClick'])
 const updateValue = (value: string) => {
   emit('update:modelValue', value)

@@ -2,7 +2,7 @@
 import TextInput from '../molecules/TextInput.vue'
 import { ref, watch } from 'vue'
 
-const emailValidation = RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+const emailValidation = RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
 
 const email = ref('')
 const emailHasError = ref(false)
