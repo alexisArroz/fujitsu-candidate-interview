@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  background-color: #edf1f5;
+}
+
+#app {
+  max-width: 1440px;
+  margin: 0 auto;
+  font-family: 'Open Sans';
+  background-color: #e0edf4;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn {
+  border-radius: 8px;
+  border: none;
+  padding: 0.9rem 1.1rem;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 2rem;
+}
