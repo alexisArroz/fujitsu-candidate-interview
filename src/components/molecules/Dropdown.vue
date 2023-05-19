@@ -31,7 +31,7 @@ const toggleDropdown = () => {
     <div @click="toggleDropdown" class="dropdown--button">
       <div class="dropdown--text">{{ text }}</div>
       <div clasS="dropdown--arrow">
-        <FaIcon icon="chevron-up" />
+        <FaIcon icon="sort-down" />
       </div>
     </div>
   </div>
@@ -46,12 +46,13 @@ const toggleDropdown = () => {
   border: 1px solid #a0a0a0;
   user-select: none;
   cursor: pointer;
+  font-size: 0.7rem;
 }
 .dropdown--button {
   display: flex;
 }
 .dropdown--text {
-  padding-right: 20px;
+  padding-right: 70px;
 }
 .dropdown--arrow {
   padding-left: 5px;
@@ -59,11 +60,11 @@ const toggleDropdown = () => {
 }
 .dropdown--options {
   position: absolute;
-  bottom: 29px;
-  left: 5px;
+  bottom: calc(100% + 1px);
+  left: 4%;
   background-color: #ffffff;
   margin: 0;
-  width: 80%;
+  width: 85%;
   padding: 2px;
   border: 1px solid #a0a0a0;
   border-bottom: none;

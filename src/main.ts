@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
 const i18n = createI18n({
-  locale: localStorage.lang || 'es',
+  locale: localStorage.lang || 'en',
   messages: messages
 })
 

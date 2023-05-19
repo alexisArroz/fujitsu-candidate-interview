@@ -1,24 +1,29 @@
 <script setup lang="ts">
 import TextInput from '../molecules/TextInput.vue'
-import { ref, watch } from 'vue'
-
+import { ref, watch, computed } from 'vue'
+//Creating Regex for fields validation
 const emailValidation = RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
+const passwordValidation = RegExp(/(?=.{8,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W)/)
 
+//Each field in the login form has its own flags and state
 const email = ref('')
 const emailHasError = ref(false)
 
 const password = ref('')
 const displayPassword = ref(false)
 const passwordHasError = ref(false)
-
+//This also applies for forgot password field
 const forgotPasswordEmail = ref('')
 const forgotPasswordHasError = ref(false)
+
 const showModal = ref(false)
 
 const emit = defineEmits(['submit'])
 
 const submitForm = () => {
-  passwordHasError.value = password.value.length < 8
+  //When trying to submit we first validate fields and set error
+  //flags true or false so this
+  passwordHasError.value = !passwordValidation.test(password.value)
   emailHasError.value = !emailValidation.test(email.value)
   if (passwordHasError.value || emailHasError.value) return
   emit('submit')
@@ -32,16 +37,25 @@ const toggleModal = () => {
   showModal.value = !showModal.value
 }
 
+//This function will be used when validating modal
+//input
 const validateModal = () => {
-  console.log(!emailValidation.test(forgotPasswordEmail.value))
   forgotPasswordHasError.value = !emailValidation.test(forgotPasswordEmail.value)
 }
 
+const emptyFields = computed(() => {
+  return password.value.length < 1 || email.value.length < 1
+})
+
+//Since we're validating this form, should watch
+//and remove the error displayed when the input
+//meets the requirements to let the user know
+//the input is valid already
 watch(email, (newemail) => {
   emailHasError.value = !emailValidation.test(newemail)
 })
 watch(password, (newPassword) => {
-  passwordHasError.value = newPassword.length < 8
+  passwordHasError.value = !passwordValidation.test(newPassword)
 })
 </script>
 
@@ -50,7 +64,6 @@ watch(password, (newPassword) => {
     <h2 class="login-form--header">{{ $t('login.title') }}</h2>
     <TextInput
       icon="user"
-      required
       :errorText="$t('login.email.error')"
       :placeholder="$t('login.email.placeholder')"
       :hasError="emailHasError"
@@ -70,22 +83,23 @@ watch(password, (newPassword) => {
     </TextInput>
     <div class="login-form--login-controls">
       <a class="login-form--forgot-password" href="#" @click="toggleModal">{{
-        $t('login.forgotPassword')
+        $t('login.forgotPassword.formLink')
       }}</a>
       <button
         class="btn login-form--login-controls--button"
-        :disabled="passwordHasError || emailHasError"
+        :disabled="emptyFields || passwordHasError || emailHasError"
         @click="submitForm"
       >
         {{ $t('login.submitButton') }}
       </button>
     </div>
+    <!--This teleport is used to move modal to body tag to prevent styling and functionality issues-->
     <Teleport to="body">
       <div v-if="showModal">
         <div class="login-form--modal--backdrop" @click="toggleModal"></div>
         <div class="login-form--modal--body">
-          <h2>Forgot your password?</h2>
-          <p>Enter your email to receive your password reset instructions.</p>
+          <h2>{{ $t('login.forgotPassword.title') }}</h2>
+          <p>{{ $t('login.forgotPassword.description') }}</p>
           <TextInput
             v-model="forgotPasswordEmail"
             :errorText="$t('login.email.error')"
@@ -103,7 +117,7 @@ watch(password, (newPassword) => {
 
 <style scoped>
 .login-form {
-  max-width: 600px;
+  max-width: 595px;
   background-color: #ffffff;
   padding: 50px 100px;
   border-radius: 5px;
@@ -115,14 +129,14 @@ watch(password, (newPassword) => {
 .login-form--header {
   text-align: center;
   margin-top: 0;
+  margin-bottom: 40px;
   font-weight: bold;
 }
 .login-form--login-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 .login-form--login-controls--button {
   font-size: 0.9rem;
@@ -145,32 +159,49 @@ watch(password, (newPassword) => {
   background-color: rgba(0, 0, 0, 0.6);
 }
 .login-form--modal--body {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-family: 'Open sans';
   position: absolute;
-  top: 10%;
+  top: 0;
   left: 0;
   right: 0;
-  margin: 50px auto;
-  max-width: 640px;
+  margin: 30px auto;
+  max-width: 670px;
   padding: 15px;
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 5px 3px 15px 3px rgba(0, 0, 0, 0.3);
 }
+.login-form--modal--body h2 {
+  font-size: 1.8rem;
+}
+.login-form--modal--body p {
+  color: #83878f;
+}
 .login-form--modal--body h2,
 .login-form--modal--body p {
-  margin: 0 0 10px 0;
+  margin: 10px 0;
   text-align: center;
 }
 .login-form--modal--body--buttons {
   display: flex;
 }
+.login-form--modal--body .btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  line-height: 1.3rem;
+  font-weight: 300;
+}
 .login-form--modal--body .btn.cancel {
   margin-right: auto;
+  background-color: #6c757d;
+  color: #ffffff;
 }
 .login-form--modal--body .btn.next {
   background-color: #337ab7;
   color: #ffffff;
+}
+.login-form--modal--body .base-input {
+  border: 1px solid #a0a0a0;
 }
 </style>
